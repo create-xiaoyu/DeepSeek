@@ -6,6 +6,6 @@ Based on NeoForgeMDK.
 Developed by DeepSeek and me.
 
 
-Build:
+Build
 ============
 run `gradlew build`
