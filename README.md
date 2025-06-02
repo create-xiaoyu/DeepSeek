@@ -1,4 +1,4 @@
-#DeepSeek
+# DeepSeek
 
 This mod allows you to interact with DeepSeek in-game using the DeepSeekAPI.
 Based on NeoForgeMDK. Developed by DeepSeek and me.
