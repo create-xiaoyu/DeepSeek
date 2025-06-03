@@ -1,0 +1,13 @@
+{
+  "command.deepseek.usage": "用法：/deepseek <消息>",
+  "command.deepseek.sending": "正在向DeepSeek发送请求...",
+  "command.deepseek.noapikey": "未配置DeepSeek API密钥！请检查配置文件",
+  "command.deepseek.playeronly": "只有玩家可以使用此命令",
+  "command.deepseek.error": "DeepSeek请求失败：%s",
+  "command.deepseek.question": "[玩家] -> DeepSeek: %s",
+  "command.deepseek.response": "[DeepSeek] -> %s: %s",
+  "config.deepseek.apikey": "DeepSeek API密钥",
+  "config.deepseek.model": "模型",
+  "config.deepseek.debug": "调试模式",
+  "config.deepseek.showquestions": "在聊天中显示问题"
+}
