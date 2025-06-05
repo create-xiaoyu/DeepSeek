@@ -17,6 +17,8 @@ Based on NeoForgeMDK. Developed by DeepSeek and me.
 ## **Warning:**
 **If you use it on a server, it will use the server-side configuration instead of the client's.**
 
+https://zh.pngtree.com/freepng/artificial-intelligence-icons-ai-icons-robot-icons-set_5513731.html icon from pngtree.com/
+
 Build
 ============
 run `gradlew build`
