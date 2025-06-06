@@ -15,7 +15,7 @@ public class DeepSeekCommand {
                 .then(Commands.argument("message", StringArgumentType.greedyString())
                         .executes(DeepSeekCommand::handleDeepSeek))
                 .executes(context -> {
-                    context.getSource().sendFailure(Component.literal("§c请输入对话内容！"));
+                    context.getSource().sendFailure(Component.translatable("command.deepseek.usage"));
                     return 0;
                 }));
 
@@ -23,7 +23,7 @@ public class DeepSeekCommand {
                 .then(Commands.argument("message", StringArgumentType.greedyString())
                         .executes(DeepSeekCommand::handleDeepSeek))
                 .executes(context -> {
-                    context.getSource().sendFailure(Component.literal("§c请输入对话内容！"));
+                    context.getSource().sendFailure(Component.translatable("command.deepseek.usage"));
                     return 0;
                 }));
     }
@@ -33,27 +33,39 @@ public class DeepSeekCommand {
         CommandSourceStack source = context.getSource();
 
         if (DeepSeekConfig.DeepSeekAPIKey.isEmpty()) {
-            source.sendFailure(Component.literal("§c未配置DeepSeek API密钥！请检查配置文件。"));
+            source.sendFailure(Component.translatable("command.deepseek.noapikey"));
             return 0;
         }
 
         if (source.getPlayer() instanceof ServerPlayer player) {
-            // 显示玩家发送的问题（新增）
-            Component questionMsg = Component.literal("§b[玩家] -> DeepSeek: §r" + message);
-            player.getServer().getPlayerList().broadcastSystemMessage(questionMsg, false);
+            // 显示玩家问题（使用翻译键）
+            if (DeepSeekConfig.ShowQuestionsInChat) {
+                Component questionMsg = Component.translatable(
+                        "command.deepseek.question",
+                        message
+                );
+                player.getServer().getPlayerList().broadcastSystemMessage(questionMsg, false);
+            }
 
-            // 异步处理API请求
             Thread apiThread = new Thread(() -> {
                 try {
                     String response = DeepSeekAPI.queryDeepSeek(message);
                     player.getServer().execute(() -> {
-                        // 显示DeepSeek的回答（修改为更清晰的格式）
-                        Component responseMsg = Component.literal("§b[DeepSeek] -> " + player.getScoreboardName() + ": §r" + response);
+                        // 使用翻译键格式化响应
+                        Component responseMsg = Component.translatable(
+                                "command.deepseek.response",
+                                player.getScoreboardName(),
+                                response
+                        );
                         player.getServer().getPlayerList().broadcastSystemMessage(responseMsg, false);
                     });
                 } catch (Exception e) {
                     player.getServer().execute(() -> {
-                        Component errorMsg = Component.literal("§cDeepSeek请求失败: " + e.getMessage());
+                        // 使用带参数的翻译键
+                        Component errorMsg = Component.translatable(
+                                "command.deepseek.error",
+                                e.getMessage()
+                        );
                         player.sendSystemMessage(errorMsg);
                         if (DeepSeekConfig.DebugMode) {
                             e.printStackTrace();
@@ -64,11 +76,14 @@ public class DeepSeekCommand {
             apiThread.setName("DeepSeek-API-Thread");
             apiThread.start();
 
-            source.sendSuccess(() -> Component.literal("§a正在向DeepSeek发送请求..."), false);
+            source.sendSuccess(() ->
+                            Component.translatable("command.deepseek.sending"),
+                    false
+            );
             return Command.SINGLE_SUCCESS;
         }
 
-        source.sendFailure(Component.literal("§c只有玩家可以使用此命令"));
+        source.sendFailure(Component.translatable("command.deepseek.playeronly"));
         return 0;
     }
 }

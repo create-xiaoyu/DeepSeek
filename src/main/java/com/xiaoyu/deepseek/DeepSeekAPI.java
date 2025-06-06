@@ -10,12 +10,14 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 
 public class DeepSeekAPI {
+
     private static final HttpClient CLIENT = HttpClient.newHttpClient();
     private static final String API_URL = "https://api.deepseek.com/v1/chat/completions";
 
     public static String queryDeepSeek(String message) throws Exception {
         if (DeepSeekConfig.DebugMode) {
-            System.out.println("[DeepSeek] 发送请求 - 模型: " + DeepSeekConfig.DeepSeeKModel + ", 内容: " + message);
+            DeepSeek.LOGGER.info("Sending request - Model: {}, Content: {}",
+                    DeepSeekConfig.DeepSeeKModel, message);
         }
 
         // 构建请求JSON
@@ -42,8 +44,8 @@ public class DeepSeekAPI {
         HttpResponse<String> response = CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (DeepSeekConfig.DebugMode) {
-            System.out.println("[DeepSeek] 响应状态: " + response.statusCode());
-            System.out.println("[DeepSeek] 响应内容: " + response.body());
+            DeepSeek.LOGGER.info("Response status: {}", response.statusCode());
+            DeepSeek.LOGGER.info("Response content: {}", response.body());
         }
 
         // 处理响应
@@ -56,8 +58,8 @@ public class DeepSeekAPI {
 
             // 记录请求和响应
             if (DeepSeekConfig.DebugMode) {
-                System.out.println("[DeepSeek] 问题: " + message);
-                System.out.println("[DeepSeek] 回答: " + responseContent);
+                DeepSeek.LOGGER.info("Question: {}", message);
+                DeepSeek.LOGGER.info("Answer: {}", responseContent);
             }
 
             return responseContent;

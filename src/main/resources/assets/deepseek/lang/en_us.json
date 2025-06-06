@@ -1,0 +1,13 @@
+{
+  "command.deepseek.usage": "Usage: /deepseek <message>",
+  "command.deepseek.sending": "Sending request to DeepSeek...",
+  "command.deepseek.noapikey": "DeepSeek API Key is not configured! Please check config file.",
+  "command.deepseek.playeronly": "Only players can use this command",
+  "command.deepseek.error": "DeepSeek request failed: %s",
+  "command.deepseek.question": "[Player] -> DeepSeek: %s",
+  "command.deepseek.response": "[DeepSeek] -> %s: %s",
+  "config.deepseek.apikey": "DeepSeek API Key",
+  "config.deepseek.model": "Model",
+  "config.deepseek.debug": "Debug Mode",
+  "config.deepseek.showquestions": "Show Questions in Chat"
+}
